@@ -1,0 +1,43 @@
+//8. String to Integer (atoi)
+
+
+class Solution {
+    public int myAtoi(String s) {
+    if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int len = s.length();
+        String f = "";
+        int i = 0;
+
+        // Remove leading whitespaces
+        while (i < len && Character.isWhitespace(s.charAt(i))) {
+            i++;
+        }
+
+        // Check for optional sign (+/-)
+        if (i < len && (s.charAt(i) == '+' || s.charAt(i) == '-')) {
+            f += s.charAt(i);
+            i++;
+        }
+
+        // Collect numeric characters
+        while (i < len && Character.isDigit(s.charAt(i))) {
+            f += s.charAt(i);
+            i++;
+        }
+
+        if (f.equals("") || f.equals("+") || f.equals("-")) {
+            return 0;
+        }
+
+        // Convert the collected string to integer
+        try {
+            Integer x = Integer.parseInt(f);
+            return x;
+        } catch (NumberFormatException e) {
+            // Handle the case where the string cannot be parsed as an integer
+            return (f.charAt(0) == '-') ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+        }
+    }
+}
