@@ -1,0 +1,26 @@
+//424. Longest Repeating Character Replacement
+//Sliding Window 
+class Solution {
+    public int characterReplacement(String s, int k) {
+        int N = s.length();
+        int[] charCounts = new int[26];
+        int windowStart = 0;
+        int maxLength = 0;
+        int maxCount = 0;
+
+        for (int windowEnd = 0; windowEnd < N; windowEnd++) {
+            charCounts[s.charAt(windowEnd) - 'A']++;
+            int currentCharCount = charCounts[s.charAt(windowEnd) - 'A'];
+            maxCount = Math.max(maxCount, currentCharCount);
+
+            while (windowEnd - windowStart + 1 - maxCount > k) {
+                charCounts[s.charAt(windowStart) - 'A']--;  //window size dec.& from left word reduce
+                windowStart++;
+            }
+
+            maxLength = Math.max(maxLength, windowEnd - windowStart + 1);
+        }
+        
+        return maxLength;
+    }
+}
