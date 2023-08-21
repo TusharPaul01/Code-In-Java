@@ -1,0 +1,24 @@
+//1922. Count Good Numbers (using Recursion)
+
+
+class Solution {
+    public int countGoodNumbers(long n) {
+        long odd = n / 2;
+        long even = n / 2 + n % 2;
+        long x = powMod(5, even);
+        long y = powMod(4, odd);
+        return (int) (x * y % 1000000007);
+    }
+    
+    private long powMod(long base, long exponent) {
+        long result = 1;
+        while (exponent > 0) {
+            if (exponent % 2 == 1) {
+                result = result * base % 1000000007;
+            }
+            base = base * base % 1000000007;
+            exponent /= 2;
+        }
+        return result;
+    }
+}
