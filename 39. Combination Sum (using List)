@@ -1,0 +1,27 @@
+//39. Combination Sum (using List)
+
+
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> val = new ArrayList<>();
+        generatelist(ans, val, candidates, target, 0);
+        return ans;
+    }
+
+    void generatelist(List<List<Integer>> ans, List<Integer> val, int[] candidates, int remainingTarget, int startIndex) {
+        if (remainingTarget == 0) {
+            ans.add(new ArrayList<>(val));  // Add a copy of 'val' to 'ans'
+            return;
+        }
+
+        for (int i = startIndex; i < candidates.length; i++) {
+            int candidate = candidates[i];
+            if (candidate <= remainingTarget) {
+                val.add(candidate);  // Include the candidate in the current combination
+                generatelist(ans, val, candidates, remainingTarget - candidate, i);  // Recur with reduced target
+                val.remove(val.size() - 1);  // Backtrack by removing the last element
+            }
+        }
+    }
+}
