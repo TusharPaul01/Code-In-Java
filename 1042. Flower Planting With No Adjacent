@@ -1,0 +1,40 @@
+//1042. Flower Planting With No Adjacent
+
+class Solution {
+    public int[] gardenNoAdj(int n, int[][] paths) {
+        List<Integer>[] graph = new List[n + 1];
+        for (int i = 1; i <= n; i++) {
+            graph[i] = new ArrayList<>();
+        }
+        
+        for (int[] path : paths) {
+            int u = path[0];
+            int v = path[1];
+            graph[u].add(v);
+            graph[v].add(u);
+        }
+        
+        int[] colors = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            boolean[] usedColors = new boolean[5]; // Colors are from 1 to 4
+            
+            for (int neighbor : graph[i]) {
+                if (colors[neighbor] != 0) {
+                    usedColors[colors[neighbor]] = true;
+                }
+            }
+            
+            for (int color = 1; color <= 4; color++) {
+                if (!usedColors[color]) {
+                    colors[i] = color;
+                    break;
+                }
+            }
+        }
+        
+        int[] result = new int[n];
+        System.arraycopy(colors, 1, result, 0, n);
+        return result;
+    
+    }
+}
